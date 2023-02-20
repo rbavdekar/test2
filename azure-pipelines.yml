@@ -17,10 +17,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $v= $env:SYSTEM_ACCESSTOKEN
-      $v1 ,$v2 = $v.Split("ey",2)
-      Write-Host $v1
-      Write-Host $v2
+      Write-Host '$($(env:SYSTEM_ACCESSTOKEN).Split("ey",2))'
   env: 
     system_accesstoken: $(System.AccessToken)
     
