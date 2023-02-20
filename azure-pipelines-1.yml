@@ -17,6 +17,7 @@ steps:
       Write-Host $v2
   env:
     system_accesstoken: $(System.AccessToken)
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
