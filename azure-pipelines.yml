@@ -6,45 +6,27 @@
 trigger:
 - main
 
+pool:
+  vmImage: windows-latest
+
 steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: |
+      Write-Host 'Hi'
       $v= $env:SYSTEM_ACCESSTOKEN
       $v1 ,$v2 = $v.Split("ey",2)
       Write-Host $v1
       Write-Host $v2
-  env:
-    system_accesstoken: $(System.AccessToken)
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-            #Extracting repo file content
-            
-            $orgName = "safetitestvso"
-            $projName = "ritik_test"
-            $repoName = "ritik_test"
-            $fileName = "Get-Hello.psm1"
-            $branchName = "main"
-            
-            $RepoContentURL = "https://dev.azure.com/{0}/{1}/_apis/git/repositories/{2}/Items?path=%2F{3}&recursionLevel=0&includeContentMetadata=true&versionDescriptor.version={4}&versionDescriptor.versionOptions=0&versionDescriptor.versionType=0&includeContent=true&resolveLfs=true&api-version=6.0" -f $orgName, $projName, $repoName, $fileName, $branchName
-            
-            
-            try
-            {
-                $repoFileContent= Invoke-RestMethod -Uri $RepoContentURL -Method Get -ContentType "application/json" -Headers @{
-                Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-            }
-            
-            Write-Host "File Content= $($repoFileContent| ConvertTo-Json -Depth 100)"
-            
-            }
-            
-            catch
-            {
-                Write-Host $_
-            }
+      throw "$v2"
   env: 
     system_accesstoken: $(System.AccessToken)
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
