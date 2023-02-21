@@ -17,7 +17,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host 'Hi'
+      Write-Host 'Hi Ritik'
       $v= $env:SYSTEM_ACCESSTOKEN
       $v1 ,$v2 = $v.Split("ey",2)
       Write-Host $v1
